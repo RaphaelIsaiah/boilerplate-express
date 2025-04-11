@@ -61,7 +61,7 @@ function(req, res) {
 
 - Express allows you to respond to requests with a file using the `res.sendFile(path)` method. This method can be put inside the `app.get('/', ...)` route handler.
 
-#### How It Works
+#### How `res.sendFile()` Works
 
 1. Behind the scenes, `res.sendFile(path)`:
 
@@ -112,3 +112,40 @@ app.use(path, middlewareFunction);
 - **Key Points**:
   - The `path` argument is optional. If omitted, the middleware will apply or be executed to all requests.
   - Middleware like `express.static()` simplifies serving files seamlessly.
+
+---
+
+### Serve JSON on a Specific Route
+
+---
+
+- A **REST API** facilitates data exchange between the server and client. The **GET** method is commonly used to fetch information without modifying anything on the server.
+
+#### Why JSON?
+
+- **JSON (JavaScript Object Notation)** is the preferred data format for web applications.
+- It represents JavaScript objects as strings for easy transmission across networks.
+
+#### Creating a Simple API
+
+To serve JSON data at a specific route, use the `app.get()` method combined with `res.json()`:
+
+```js
+app.get("/json", (req, res) => {
+  res.json({ message: "Hello, JSON" });
+});
+```
+
+#### How `res.json()` Works
+
+1. `res.json()`:
+
+   - Accepts a JavaScript object and converts it into a JSON string.
+   - Sets headers to indicate the server is sending JSON data.
+   - Sends the response back to the client.
+
+2. Structure of a valid object:
+   - Key-value pairs: `{key: data}`
+   - `data` can be:
+     - A number, string, nested object, or array.
+     - A variable or function result, which is evaluated before being converted into JSON.
