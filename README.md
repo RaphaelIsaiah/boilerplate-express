@@ -136,7 +136,7 @@ app.get("/json", (req, res) => {
 });
 ```
 
-#### How `res.json()` Works
+##### How `res.json()` Works
 
 1. `res.json()`:
 
@@ -149,3 +149,28 @@ app.get("/json", (req, res) => {
    - `data` can be:
      - A number, string, nested object, or array.
      - A variable or function result, which is evaluated before being converted into JSON.
+
+---
+
+### Using the `.env` File for Environment Variables
+
+The `.env` file is a hidden file used to pass environment variables to your application. It is private, accessible only to you, and ideal for storing sensitive data like:
+
+- **API keys** from external services.
+- **Database URIs**.
+- **Configuration options** to modify application behavior without changing the code.
+
+#### How to Use Environment Variables
+
+- Access variables in your app using `process.env.VAR_NAME`.
+- The `process.env` object is a global Node.js object where:
+  - Variables are passed as **strings**.
+  - Variable names are conventionally **uppercase** with words separated by underscores.
+- The `dotenv` package is used to load environment variables from the `.env` file into `process.env`.
+
+#### Important Notes
+
+- **No spaces** around the equals sign when assigning values (e.g., `VAR_NAME=value`).
+- **Quotes are not required** for names or values.
+- Each variable definition is placed on a separate line in the `.env` file.
+- At the top of the myApp.js file, add `require('dotenv').config()` to load the environment variables
