@@ -154,6 +154,8 @@ app.get("/json", (req, res) => {
 
 ### Using the `.env` File for Environment Variables
 
+---
+
 The `.env` file is a hidden file used to pass environment variables to your application. It is private, accessible only to you, and ideal for storing sensitive data like:
 
 - **API keys** from external services.
@@ -174,3 +176,42 @@ The `.env` file is a hidden file used to pass environment variables to your appl
 - **Quotes are not required** for names or values.
 - Each variable definition is placed on a separate line in the `.env` file.
 - At the top of the myApp.js file, add `require('dotenv').config()` to load the environment variables
+
+---
+
+### Implementing a Root-Level Request Logger Middleware
+
+---
+
+Middleware functions in Express are functions that process requests in the application’s request-response cycle. They take three arguments:
+
+- `req`: The request object.
+- `res`: The response object.
+- `next`: A function that passes control to the next middleware in the stack.
+
+#### Key Characteristics of Middleware
+
+- Middleware can:
+  - Execute custom code and potentially have side effects.
+  - Add data to the `req` or `res` objects.
+  - End the request-response cycle by sending a response when some condition is met.
+  - Pass control to the next middleware by calling `next()`.
+- Middleware is mounted using `app.use(middlewareFunction)` for root-level middleware.
+
+```js
+app.use((req, res, next) => {
+  console.log("I'm a middleware...");
+  next(); // Passes control to the next middleware/route handler
+});
+```
+
+#### Mounting Middleware
+
+- Root-level middleware executes for **all requests** unless conditions (like specific HTTP verbs) are specified.
+- Middleware should be mounted **before all routes** to ensure they process requests globally.
+
+#### Order of Execution
+
+- Express processes middleware and routes in the **order they appear in the code**. Make sure to define middleware before specific routes to ensure proper execution.
+
+---

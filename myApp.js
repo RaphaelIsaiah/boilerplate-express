@@ -4,6 +4,12 @@ require("dotenv").config();
 let express = require("express");
 let app = express();
 
+// Root level middleware for logging requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path} -  ${req.ip}`);
+  next();
+});
+
 // Add the route to serve index.html from the views folder
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
