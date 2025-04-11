@@ -1,6 +1,10 @@
 let express = require("express");
 let app = express();
 
-module.exports = app;
+// Add the route to serve "Hello Express"
+app.get("/", function (req, res) {
+  res.send("Hello Express");
+});
 
 console.log("Hello World");
+module.exports = app;
