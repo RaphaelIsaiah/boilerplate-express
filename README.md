@@ -77,3 +77,38 @@ absolutePath = __dirname + "/relativePath/file.ext";
 ```
 
 **Note**: `res.sendFile()` requires an absolute path to locate the file. Using `__dirname` ensures the file path is correct relative to your project directory.
+
+---
+
+### Serve Static Assets
+
+---
+
+- Static assets are files like **stylesheets**, **scripts**, and **images** that are essential for your application. These assets are typically stored in accessible directories on your server.
+
+#### Using Express to Serve Static Files
+
+- Use the `express.static(path)` middleware to serve these files.
+- The path parameter specifies the absolute `path` to the folder containing your static assets.
+
+```js
+app.use(express.static(__dirname + "/public"));
+```
+
+- This serves all files located in the public folder as static assets.
+- For example: `/style.css` will serve `style.css` from the `public` directory.
+
+#### What Is Middleware?
+
+Middleware in Express are functions that:
+
+- **Intercept route handlers** to perform additional tasks or add information.
+- Are applied or mounted using the `app.use()` method.
+
+```js
+app.use(path, middlewareFunction);
+```
+
+- **Key Points**:
+  - The `path` argument is optional. If omitted, the middleware will apply or be executed to all requests.
+  - Middleware like `express.static()` simplifies serving files seamlessly.
