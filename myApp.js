@@ -29,6 +29,12 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
 
+// An Echo Server
+app.get("/:word/echo", (req, res) => {
+  const word = req.params.word; // Capture the route parameter
+  res.json({ echo: word }); // Respond with the echoed word in JSON format
+});
+
 // Add route to serve static files from the public folder
 app.use("/public", express.static(__dirname + "/public"));
 

@@ -277,3 +277,30 @@ Result: The client receives:
 ```json
 { "user": "Tommy" }
 ```
+
+---
+
+### Get Route Parameter Input from the Client
+
+---
+
+- When building an API, we have to allow users to communicate to us what they want to get from our service.
+- Route parameters are dynamic parts of a URL that allow clients to pass data to the server directly within the URL.
+- When building an API, route parameters allow clients to pass data directly within the URL. They’re defined using a colon (`:`) in the route path and capture corresponding values from the URL when a request is made. These captured values are stored in `req.params`, an object available in the request object.
+
+#### Example
+
+- Route Path: `/user/:userId/book/:bookId`
+- Actual Request URL: `/user/546/book/6754`
+- Captured Parameters `(req.params)`:
+
+```json
+{
+  "userId": "546",
+  "bookId": "6754"
+}
+```
+
+This approach allows the server to process specific data provided directly in the URL.
+
+---
