@@ -49,12 +49,14 @@ app.get("/:word/echo", (req, res) => {
 app
   .route("/name")
   .get((req, res) => {
-    const firstName = req.query.first;
-    const lastName = req.query.last;
+    const firstName = req.query.first; // Extract from query string
+    const lastName = req.query.last; // Extract from query string
     res.json({ name: `${firstName} ${lastName}` });
   })
   .post((req, res) => {
-    // Handle POST requests here next
+    const firstName = req.body.first; // Extract from request body
+    const lastName = req.body.last; // Extract from request body
+    res.json({ name: `${firstName} ${lastName}` });
   });
 
 // Add route to serve static files from the public folder

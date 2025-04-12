@@ -385,3 +385,57 @@ POST requests are used to send data in the **request body** (payload) to the ser
      ```
 
 ---
+
+### Get Data from POST Requests
+
+---
+
+POST requests send data in the **request body** (payload), which is parsed by the `body-parser` middleware. The data is encoded as `key=value` pairs, and `body-parser` makes it accessible via `req.body`.
+
+#### Example
+
+- **Route Path**: POST `/library`
+- **Request Body**: `userId=546&bookId=6754`
+- **Parsed Request Body (`req.body`)**:
+
+  ```json
+  { "userId": "546", "bookId": "6754" }
+  ```
+
+#### HTTP Method Recap
+
+- **GET**: Reads an existing resource without modifying it.
+- **POST**: Sends data to create a new resource (or sometimes update one).
+- **PUT/PATCH**: Updates an existing resource.
+- **DELETE**: Deletes a resource.
+
+`body-parser` works for POST, PUT, PATCH, and other methods that allow a request body.
+
+#### Task: Add a POST Handler to `/name`
+
+- Extract `first` and `last` from the request body.
+- Respond with a JSON object:
+
+  ```json
+  { "name": "firstname lastname" }
+  ```
+
+#### **Example Implementation**
+
+```javascript
+app.post("/name", (req, res) => {
+  const firstName = req.body.first; // Extract from request body
+  const lastName = req.body.last; // Extract from request body
+  res.json({ name: `${firstName} ${lastName}` });
+});
+```
+
+#### Result
+
+- Submitting `first=John` and `last=Doe` in the form results in:
+
+  ```json
+  { "name": "John Doe" }
+  ```
+
+---
