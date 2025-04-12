@@ -35,6 +35,13 @@ app.get("/:word/echo", (req, res) => {
   res.json({ echo: word }); // Respond with the echoed word in JSON format
 });
 
+// An API endpoint
+app.get("/name", (req, res) => {
+  firstname = req.query.first; // Extract `first` from query parameters
+  lastname = req.query.last; // Extract `last` from query parameters
+  res.json({ name: `${firstname} ${lastname}` }); // Send the JSON response
+});
+
 // Add route to serve static files from the public folder
 app.use("/public", express.static(__dirname + "/public"));
 
