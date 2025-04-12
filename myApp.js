@@ -1,13 +1,23 @@
+const bodyParser = require("body-parser");
+
 require("dotenv").config();
 
 // Setup Express app; initialize an app instance
 let express = require("express");
 let app = express();
 
+// Mount body-parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // Root level middleware for logging requests
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path} -  ${req.ip}`);
   next();
+});
+
+//  Example route to handle POST requests
+app.post("/example", (req, res) => {
+  res.json({ name: req.body.name, age: req.body.age });
 });
 
 // Middleware to add current time to the request object

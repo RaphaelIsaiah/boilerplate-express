@@ -341,3 +341,47 @@ app
 ```
 
 ---
+
+### Use `body-parser` to Parse POST Requests
+
+---
+
+POST requests are used to send data in the **request body** (payload) to the server. This data is not visible in the URL. The `body-parser` package helps parse the request body into a readable format for the server.
+
+#### Setup
+
+1. **Require `body-parser`:**
+
+   ```javascript
+   const bodyParser = require("body-parser");
+   ```
+
+2. **Mount Middleware to Parse URL-Encoded Data:**
+
+   ```javascript
+   app.use(bodyParser.urlencoded({ extended: false }));
+   ```
+
+   - The `extended` option determines the parsing library used:
+     - `extended: false`: Uses `querystring` library for simple objects.
+     - `extended: true`: Uses `qs` library for more complex objects.
+
+3. **Usage in POST Routes:**
+
+   - Access parsed data in `req.body`:
+
+     ```javascript
+     app.post("/example", (req, res) => {
+       res.json({ name: req.body.name, age: req.body.age });
+     });
+     ```
+
+4. **Result:**
+
+   - If the request body contains `name=John&age=25`, the response will be:
+
+     ```json
+     { "name": "John", "age": 25 }
+     ```
+
+---
