@@ -47,11 +47,11 @@ This is the boilerplate code for the Basic Node and Express Challenges. Instruct
   - `HANDLER`: A function called when the route is matched.
 - Handlers take the form `function(req, res) {...}`, where `req` is the request object, and `res` is the response object. In the example of a handler below, the handler will serve the string 'Response String'.
 
-```js
-function(req, res) {
-  res.send('Response String');
-}
-```
+  ```js
+  function(req, res) {
+    res.send('Response String');
+  }
+  ```
 
 ---
 
@@ -91,9 +91,9 @@ absolutePath = __dirname + "/relativePath/file.ext";
 - Use the `express.static(path)` middleware to serve these files.
 - The path parameter specifies the absolute `path` to the folder containing your static assets.
 
-```js
-app.use(express.static(__dirname + "/public"));
-```
+  ```js
+  app.use(express.static(__dirname + "/public"));
+  ```
 
 - This serves all files located in the public folder as static assets.
 - For example: `/style.css` will serve `style.css` from the `public` directory.
@@ -199,12 +199,12 @@ Middleware functions in Express are functions that process requests in the appli
 - Middleware is mounted using `app.use(middlewareFunction)` for root-level middleware.
 - Middleware is applied globally for all routes using `app.use()`.
 
-```js
-app.use((req, res, next) => {
-  console.log("I'm a middleware...");
-  next(); // Passes control to the next middleware/route handler
-});
-```
+  ```js
+  app.use((req, res, next) => {
+    console.log("I'm a middleware...");
+    next(); // Passes control to the next middleware/route handler
+  });
+  ```
 
 #### Mounting Middleware
 
@@ -288,19 +288,56 @@ Result: The client receives:
 - Route parameters are dynamic parts of a URL that allow clients to pass data to the server directly within the URL.
 - When building an API, route parameters allow clients to pass data directly within the URL. They’re defined using a colon (`:`) in the route path and capture corresponding values from the URL when a request is made. These captured values are stored in `req.params`, an object available in the request object.
 
-#### Example
+#### Route Parameter Example
 
 - Route Path: `/user/:userId/book/:bookId`
 - Actual Request URL: `/user/546/book/6754`
 - Captured Parameters `(req.params)`:
 
-```json
-{
-  "userId": "546",
-  "bookId": "6754"
-}
-```
+  ```json
+  {
+    "userId": "546",
+    "bookId": "6754"
+  }
+  ```
 
 This approach allows the server to process specific data provided directly in the URL.
+
+---
+
+### Get Query Parameter Input from the Client
+
+---
+
+Query parameters allow clients to send key-value pairs as part of the URL. They follow the format `?key=value` and are separated by `&`. Express parses these parameters into the `req.query` object.
+
+#### Query Parameter Example
+
+- **Route Path**: `/library`
+- **Request URL**: `/library?userId=546&bookId=6754`
+- **Parsed Query Parameters (`req.query`)**:
+
+  ```json
+  { "userId": "546", "bookId": "6754" }
+  ```
+
+#### Chaining Handlers on the Same Path
+
+You can chain multiple handlers using `app.route()`. This allows you to cleanly define behavior for different HTTP methods on the same route, example `/name`.
+
+Example:
+
+```javascript
+app
+  .route("/name")
+  .get((req, res) => {
+    const firstName = req.query.first;
+    const lastName = req.query.last;
+    res.json({ name: `${firstName} ${lastName}` });
+  })
+  .post((req, res) => {
+    // Handle POST requests here next
+  });
+```
 
 ---

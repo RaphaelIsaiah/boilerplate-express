@@ -36,11 +36,16 @@ app.get("/:word/echo", (req, res) => {
 });
 
 // An API endpoint
-app.get("/name", (req, res) => {
-  firstname = req.query.first; // Extract `first` from query parameters
-  lastname = req.query.last; // Extract `last` from query parameters
-  res.json({ name: `${firstname} ${lastname}` }); // Send the JSON response
-});
+app
+  .route("/name")
+  .get((req, res) => {
+    const firstName = req.query.first;
+    const lastName = req.query.last;
+    res.json({ name: `${firstName} ${lastName}` });
+  })
+  .post((req, res) => {
+    // Handle POST requests here next
+  });
 
 // Add route to serve static files from the public folder
 app.use("/public", express.static(__dirname + "/public"));
