@@ -10,6 +10,20 @@ app.use((req, res, next) => {
   next();
 });
 
+// Middleware to add current time to the request object
+function addCurrentTime(req, res, next) {
+  req.time = new Date().toString(); // Attach current time to the request object
+  next(); // Pass control to the next middleware
+}
+
+// Middleware to send the time as a JSON response
+function sendTime(req, res) {
+  res.json({ time: req.time }); // Send the time added by the first middleware
+}
+
+// Chain the addCurrentTime and sendTime middlewares
+app.get("/now", addCurrentTime, sendTime);
+
 // Add the route to serve index.html from the views folder
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");

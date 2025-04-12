@@ -197,6 +197,7 @@ Middleware functions in Express are functions that process requests in the appli
   - End the request-response cycle by sending a response when some condition is met.
   - Pass control to the next middleware by calling `next()`.
 - Middleware is mounted using `app.use(middlewareFunction)` for root-level middleware.
+- Middleware is applied globally for all routes using `app.use()`.
 
 ```js
 app.use((req, res, next) => {
@@ -215,3 +216,64 @@ app.use((req, res, next) => {
 - Express processes middleware and routes in the **order they appear in the code**. Make sure to define middleware before specific routes to ensure proper execution.
 
 ---
+
+### Chain Middleware to Create a Time Server
+
+---
+
+Middleware can be mounted on specific routes using `app.METHOD(path, middlewareFunction)` and can also be chained within a route definition.
+
+#### Key Advantages of Chaining Middleware
+
+- Splits server operations into smaller, reusable units, improving app structure.
+- Enables data validation or processing at various points in the middleware stack.
+- Provides flexibility to handle errors or pass control to the next matching route for special cases.
+
+#### Example of chaining middleware
+
+```js
+app.get(
+  "/user",
+  function (req, res, next) {
+    req.user = getTheUserSync(); // Simulated synchronous operation
+    next(); // Passes control to the next middleware
+  },
+  function (req, res) {
+    res.send(req.user); // Sends the user object as a response
+  }
+);
+```
+
+#### Best practices
+
+- Mount root-level middleware before defining routes to ensure it applies globally.
+- Use `next()` to pass control unless the middleware ends the request-response cycle.
+
+#### Another example of chaining middleware
+
+```js
+app.get(
+  "/example",
+  function (req, res, next) {
+    console.log("Step 1: Logging the request");
+    req.data = { user: "Tommy" }; // Add data to the request object
+    next(); // Pass control to the next middleware
+  },
+  function (req, res) {
+    console.log("Step 2: Sending the response");
+    res.send(req.data); // Use the modified request object to send a response
+  }
+);
+```
+
+##### What Happens Here
+
+1. The first middleware logs the request and adds data to `req.data`.
+2. It then calls `next()` to allow the second middleware to execute.
+3. The second middleware logs a message and sends the response.
+
+Result: The client receives:
+
+```json
+{ "user": "Tommy" }
+```
