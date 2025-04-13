@@ -1,6 +1,6 @@
-const bodyParser = require("body-parser");
-
 require("dotenv").config();
+
+const bodyParser = require("body-parser");
 
 // Setup Express app; initialize an app instance
 let express = require("express");
